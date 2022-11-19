@@ -11,4 +11,4 @@ COPY .env .
 
 EXPOSE 3000
 
-CMD [ "npm", "run", "watch" ]
+CMD [ "npm", "run", "start:dev" ]
