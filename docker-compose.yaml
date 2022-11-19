@@ -1,0 +1,35 @@
+version: '3.7'
+services:
+  postgres:
+    image: postgres:latest
+    env_file:
+      - .env
+    volumes:
+      - './postgres:/var/lib/postgresql/data'
+    ports:
+      - 5432:5432
+    logging:
+      options:
+        max-size: 10m
+        max-file: "3"
+  pgadmin:
+    image: dpage/pgadmin4
+    env_file:
+      - .env
+    ports:
+      - "5050:80"
+  web:
+    build: .
+    command: [ "npm", "run", "start:dev" ]
+    links:
+      - postgres
+    image: sql-express-storefront
+    depends_on:
+      - postgres
+    ports:
+      - '3000:3000'
+    env_file:
+      - .env
+
+volumes:
+  postgres:

@@ -1,0 +1,30 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "@typescript-eslint",
+    "prettier",
+    "jasmine"
+  ],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier"
+  ],
+  "env": {
+    "node": true,
+    "es6": true,
+    "jasmine": true
+  },
+  "rules": {
+    "@typescript-eslint/no-empty-function": 0,
+    "no-console": 0,
+    "prettier/prettier": [1, { "endOfLine": "auto" } ],
+    "quotes": [ 1, "single", { "avoidEscape": true } ],
+    "no-var": 1,
+    "prefer-const": 2,
+    "no-multiple-empty-lines": 0,
+    "@typescript-eslint/no-inferrable-types": 1
+  }
+}
