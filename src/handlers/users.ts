@@ -3,6 +3,7 @@ import jwt, { Secret } from 'jsonwebtoken';
 
 import { User, UserStore } from '../models/user';
 import formatError from '../utilities/formatError';
+import verifyAuthToken from '../middleware/auth';
 
 const store = new UserStore();
 
@@ -10,7 +11,7 @@ const create = async (req: Request, res: Response) => {
   const user: User = {
     email: req.body.email,
     username: req.body.username,
-    _password: req.body._password
+    _password: req.body.password
   };
   try {
     const result = await store.create(user);
@@ -31,7 +32,7 @@ const authenticate = async (req: Request, res: Response) => {
     res.status(200).json(token);
   } catch (err) {
     const formatedError = formatError(err);
-    res.status(400).json(formatedError);
+    res.status(401).json(formatedError);
   }
 };
 
