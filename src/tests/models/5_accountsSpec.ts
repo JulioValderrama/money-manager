@@ -12,12 +12,16 @@ describe('------------------------------TESTING Account Model-------------------
   describe('Testing ACCOUNTS Model CRUD API with Database \n', () => {
     const accounts: Accounts = {
       name: 'savings',
+      amount_account_currency: 10,
+      amount_default_currency: 15,
       included_total: 'yes',
       currency_id: 1,
       user_id: 1
     };
     const accounts1: Accounts = {
       name: 'England',
+      amount_account_currency: 110,
+      amount_default_currency: 115,
       included_total: 'no',
       currency_id: 2,
       user_id: 1

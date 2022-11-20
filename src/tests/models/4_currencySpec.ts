@@ -22,5 +22,9 @@ describe('------------------------------TESTING Currency Model------------------
       expect(result.name).toEqual('EUR');
       expect(result2.name).toEqual('GBP');
     });
+    it('Should CREATEALL() fetch data from API and create symbols in Database', async () => {
+      const result = await store.createAll();
+      expect(result.length).toBeGreaterThan(100);
+    });
   });
 });

@@ -10,7 +10,6 @@ const convertCurrency = async (currencyFrom: string, currencyTo: string, amount:
   };
   try {
     const result = await axios.get(convertCurrencyIUrl, { params: params });
-    console.log(result.data.result);
     return result.data.result;
   } catch (err) {
     throw new Error(`Could not convert Currency. Error: ${err}`);
