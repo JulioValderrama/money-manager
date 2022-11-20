@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS accounts (
     id SERIAL PRIMARY KEY,
-    name VARCHAR(50) NOT NULL,
+    name VARCHAR(50) NOT NULL UNIQUE,
     amount_account_currency INTEGER NOT NULL,
     amount_default_currency INTEGER NOT NULL,
     included_total VARCHAR(10) DEFAULT 'yes',

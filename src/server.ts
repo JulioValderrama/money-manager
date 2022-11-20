@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 
 import usersRoutes from './handlers/users';
 import categoryTypeRoutes from './handlers/category_type';
+import categoryRoutes from './handlers/category';
 
 const app: express.Application = express();
 
@@ -18,6 +19,7 @@ app.get('/', function (_req: Request, res: Response) {
 
 usersRoutes(app);
 categoryTypeRoutes(app);
+categoryRoutes(app);
 
 app.listen(port, function () {
   console.log(`starting app on: http://localhost:${port}`);
