@@ -21,6 +21,7 @@ export class UserStore {
         'INSERT INTO users (email, username, _password) VALUES ($1, $2, $3) RETURNING email, username;';
 
       // We hash the password recieved from the user
+      if (!user._password) throw new Error('Password must be provided');
       const hash = bcrypt.hashSync(user._password + pepper, parseInt(saltRounds));
       const result = await connection.query(sql, [user.email, user.username, hash]);
       connection.release();
