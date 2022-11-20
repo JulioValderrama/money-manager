@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express';
 import bodyParser from 'body-parser';
 
 import usersRoutes from './handlers/users';
+import categoryTypeRoutes from './handlers/category_type';
 
 const app: express.Application = express();
 
@@ -16,6 +17,7 @@ app.get('/', function (_req: Request, res: Response) {
 // API ROUTES
 
 usersRoutes(app);
+categoryTypeRoutes(app);
 
 app.listen(port, function () {
   console.log(`starting app on: http://localhost:${port}`);
