@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import client from '../database';
+import client from '../database/database';
 
 const pepper: string = process.env.BCRYPT_PASSWORD as string;
 const saltRounds: string = process.env.SALT_ROUND as string;

@@ -1,4 +1,4 @@
-import client from '../database';
+import client from '../database/database';
 import currencySymbols from '../services/apis/currency-symbols';
 
 export type Currency = {

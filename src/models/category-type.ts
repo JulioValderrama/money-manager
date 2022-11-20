@@ -1,4 +1,4 @@
-import client from '../database';
+import client from '../database/database';
 
 export class CategoryTypeStore {
   // CREATE()
