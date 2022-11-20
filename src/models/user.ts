@@ -18,7 +18,7 @@ export class UserStore {
     try {
       const connection = await client.connect();
       const sql =
-        'INSERT INTO users (email, username, _password) VALUES ($1, $2, $3) RETURNING email, username;';
+        'INSERT INTO users (email, username, password) VALUES ($1, $2, $3) RETURNING email, username;';
 
       // We hash the password recieved from the user
       if (!user._password) throw new Error('Password must be provided');
@@ -35,13 +35,13 @@ export class UserStore {
 
   async authenticate(username: string, password: string) {
     const connection = await client.connect();
-    const sql = 'SELECT username, _password FROM users WHERE username=($1);';
+    const sql = 'SELECT username, password FROM users WHERE username=($1);';
     const result = await connection.query(sql, [username]);
     const user = result.rows[0];
     connection.release();
 
     if (result.rows.length) {
-      if (bcrypt.compareSync(password + pepper, user._password)) {
+      if (bcrypt.compareSync(password + pepper, user.password)) {
         return user;
       } else {
         throw new Error('The password is invalid, please try again.');
