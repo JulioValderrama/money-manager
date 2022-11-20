@@ -1,4 +1,5 @@
 import { Account, AccountStore } from '../../models/account';
+import convertCurrency from '../../services/apis/convert-currency';
 
 const store = new AccountStore();
 
