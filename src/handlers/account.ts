@@ -1,9 +1,9 @@
 import express, { Request, Response } from 'express';
 
 import { Account, AccountStore } from '../models/account';
-import { AccountsStore } from '../models/accounts';
 import formatError from '../utilities/formatError';
-import convertCurrency from '../services/apis/convert-currency';
+import getDefaultCurrency from '../utilities/getSymbolToConvert';
+import { AccountsStore } from '../models/accounts';
 
 const store = new AccountStore();
 const accountsStore = new AccountsStore();
@@ -17,19 +17,17 @@ const create = async (req: Request, res: Response) => {
     category_id: req.body.category_id
   };
   try {
-    const currencyAccountSymbol = await accountsStore.getCurrencySymbol(account.accounts_id);
-    const currencyDefaultConverted = await convertCurrency(
-      currencyAccountSymbol.name,
+    account.amount_default_currency = await getDefaultCurrency(
+      account.accounts_id,
       'GBP',
       account.amount_account_currency
     );
-    account.amount_default_currency = parseInt(currencyDefaultConverted as unknown as string);
     const result = await store.create(account);
     const updateAccountsTotal = await accountsStore.updateTotal(account.accounts_id, account.category_id);
     console.log(
       `${account.amount_account_currency}$ has been added to the total amount of this account with a new updated TOTAL of ${updateAccountsTotal?.amount_account_currency}$`
     );
-    console.log(`The currency converted amount is ${currencyDefaultConverted}`);
+    console.log(`The currency converted amount is ${account.amount_default_currency}`);
     res.status(201).json(result);
   } catch (err) {
     const formatedError = formatError(err);
