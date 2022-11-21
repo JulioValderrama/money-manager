@@ -34,6 +34,7 @@ export class CategoryStore {
       throw new Error(`Could not get the Category. Error: ${error}`);
     }
   }
+
   // CREATE()
 
   async create(category: Category) {

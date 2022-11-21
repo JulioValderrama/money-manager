@@ -7,6 +7,34 @@ export type Currency = {
 };
 
 export class CurrencyStore {
+  // INDEX()
+
+  async index(): Promise<Currency[]> {
+    try {
+      const connection = await client.connect();
+      const sql = 'SELECT * FROM currency;';
+      const result = await connection.query(sql);
+      connection.release();
+      return result.rows;
+    } catch (error) {
+      throw new Error(`Could not get Currency. Error: ${error}`);
+    }
+  }
+
+  // SHOW()
+
+  async show(id: string): Promise<Currency> {
+    try {
+      const connection = await client.connect();
+      const sql = 'SELECT * FROM currency WHERE id=($1)';
+      const result = await connection.query(sql, [id]);
+      connection.release();
+      return result.rows[0];
+    } catch (error) {
+      throw new Error(`Could not get the Currency. Error: ${error}`);
+    }
+  }
+
   // CREATE()
 
   async create(currency: Currency): Promise<Currency> {
@@ -34,6 +62,21 @@ export class CurrencyStore {
       return symbolsList;
     } catch (err) {
       throw new Error(`Could not create all the symbols from external API. Error: ${err}`);
+    }
+  }
+
+  // DELETE()
+
+  async delete(id: string): Promise<Currency> {
+    try {
+      const connection = await client.connect();
+      const sql = 'DELETE FROM currency WHERE id=($1) RETURNING *;';
+      const result = await connection.query(sql, [id]);
+      connection.release();
+      return result.rows[0];
+    } catch (error) {
+      console.log(error);
+      throw new Error(`Could not DELETE Currency. Error: ${error}`);
     }
   }
 }
