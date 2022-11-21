@@ -23,11 +23,7 @@ const create = async (req: Request, res: Response) => {
       account.amount_account_currency
     );
     const result = await store.create(account);
-    const updateAccountsTotal = await accountsStore.updateTotal(account.accounts_id, account.category_id);
-    console.log(
-      `${account.amount_account_currency}$ has been added to the total amount of this account with a new updated TOTAL of ${updateAccountsTotal?.amount_account_currency}$`
-    );
-    console.log(`The currency converted amount is ${account.amount_default_currency}`);
+    await accountsStore.updateTotal(account.accounts_id, account.category_id);
     res.status(201).json(result);
   } catch (err) {
     const formatedError = formatError(err);

@@ -32,3 +32,5 @@ app.listen(port, function () {
 });
 
 console.log('Working');
+
+export default app;

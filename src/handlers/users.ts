@@ -7,11 +7,43 @@ import verifyAuthToken from '../middleware/auth';
 
 const store = new UserStore();
 
+// INDEX = app.get('/api/users', index)
+
+const index = async (_req: Request, res: Response) => {
+  try {
+    const result = await store.index();
+    if (result.length == 0) {
+      throw new Error('No results FOUND in USERS table');
+    }
+    res.status(200).json(result);
+  } catch (error) {
+    const formatedError = formatError(error);
+    res.status(400).json(formatedError);
+  }
+};
+
+// SHOW = app.get('/api/users/:id', show);
+
+const show = async (req: Request, res: Response) => {
+  try {
+    const result = await store.show(req.params.id);
+    if (result == undefined) {
+      throw new Error(`No results FOUND for USER with id = ${req.params.id}`);
+    }
+    res.status(200).json(result);
+  } catch (error) {
+    const formatedError = formatError(error);
+    res.status(400).json(formatedError);
+  }
+};
+
+// CREATE = app.post('/api/users', create);
+
 const create = async (req: Request, res: Response) => {
   const user: User = {
     email: req.body.email,
     username: req.body.username,
-    _password: req.body.password
+    password: req.body.password
   };
   try {
     const result = await store.create(user);
@@ -23,6 +55,23 @@ const create = async (req: Request, res: Response) => {
     res.status(400).json(formatedError);
   }
 };
+
+// DELETE = app.delete('/api/users/:id', destroy)
+
+const destroy = async (req: Request, res: Response) => {
+  try {
+    const result = await store.delete(req.params.id);
+    if (result == undefined) {
+      throw new Error(`No User found with id = ${req.params.id}`);
+    }
+    res.status(200).json(result);
+  } catch (error) {
+    const formatedError = formatError(error);
+    res.status(400).json(formatedError);
+  }
+};
+
+// LOGIN = app.post('/users/login', authenticate)
 
 const authenticate = async (req: Request, res: Response) => {
   try {
@@ -36,8 +85,16 @@ const authenticate = async (req: Request, res: Response) => {
   }
 };
 
+// USERS ROUTES
+
 const usersRoutes = (app: express.Application) => {
+  // CRUD Routes
+  app.get('/api/users', verifyAuthToken, index);
+  app.get('/api/users/:id', verifyAuthToken, show);
   app.post('/api/users', create);
+  app.delete('/api/users/:id', verifyAuthToken, destroy);
+
+  // AUTHENTICATION & LOGIN routes
   app.post('/api/users/login', authenticate);
 };
 

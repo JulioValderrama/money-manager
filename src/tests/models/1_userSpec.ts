@@ -16,13 +16,13 @@ describe('------------------------------TESTING UserStore Model-----------------
     const user1: User = {
       email: '1@gmail.com',
       username: 'test1',
-      _password: '1'
+      password: '1'
     };
 
     const user2: User = {
       email: '2@gmail.com',
       username: 'test2',
-      _password: '2'
+      password: '2'
     };
 
     it('Should CREATE() create new USER', async () => {
