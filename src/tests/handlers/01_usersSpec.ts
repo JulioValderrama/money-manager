@@ -6,7 +6,7 @@ import app from '../../server';
 
 const request = supertest(app);
 
-fdescribe('<<<<<<<<<<<<<<<<<< TESTING USERS Handler >>>>>>>>>>>>>>>>>>>>>>>', () => {
+describe('<<<<<<<<<<<<<<<<<< TESTING USERS Handler >>>>>>>>>>>>>>>>>>>>>>>', () => {
   describe('Testing Users CRUD API endpoints \n', () => {
     const user1: User = {
       email: 'HANDLER',
