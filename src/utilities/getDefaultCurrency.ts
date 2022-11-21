@@ -3,7 +3,11 @@ import { AccountsStore } from '../models/accounts';
 
 const accountsStore = new AccountsStore();
 
-const getDefaultCurrency = async (accountId: number, currencyDefaultSymbol: string, amount: number) => {
+const getDefaultCurrency = async (
+  accountId: number,
+  currencyDefaultSymbol: string,
+  amount: number
+): Promise<number> => {
   const currencyAccountSymbol = await accountsStore.getCurrencySymbol(accountId);
   const currencyDefaultConverted = await convertCurrency(
     currencyAccountSymbol.name,

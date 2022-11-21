@@ -8,6 +8,36 @@ import { AccountsStore } from '../models/accounts';
 const store = new AccountStore();
 const accountsStore = new AccountsStore();
 
+// INDEX = app.get('/api/account', index)
+
+const index = async (_req: Request, res: Response) => {
+  try {
+    const result = await store.index();
+    if (result.length == 0) {
+      throw new Error('No results FOUND in ACCOUNT table');
+    }
+    res.status(200).json(result);
+  } catch (error) {
+    const formatedError = formatError(error);
+    res.status(400).json(formatedError);
+  }
+};
+
+// SHOW = app.get('/api/account/:id', show);
+
+const show = async (req: Request, res: Response) => {
+  try {
+    const result = await store.show(req.params.id);
+    if (result == undefined) {
+      throw new Error(`No results FOUND for ACCOUNT with id = ${req.params.id}`);
+    }
+    res.status(200).json(result);
+  } catch (error) {
+    const formatedError = formatError(error);
+    res.status(400).json(formatedError);
+  }
+};
+
 const create = async (req: Request, res: Response) => {
   const account: Account = {
     date: req.body.date,
@@ -19,7 +49,7 @@ const create = async (req: Request, res: Response) => {
   try {
     account.amount_default_currency = await getDefaultCurrency(
       account.accounts_id,
-      'GBP',
+      'EUR',
       account.amount_account_currency
     );
     const result = await store.create(account);
@@ -31,8 +61,28 @@ const create = async (req: Request, res: Response) => {
   }
 };
 
+// DELETE = app.delete('/api/account/:id', destroy)
+
+const destroy = async (req: Request, res: Response) => {
+  try {
+    const result = await store.delete(req.params.id);
+    if (result == undefined) {
+      throw new Error(`No ACCOUNT found with id = ${req.params.id}`);
+    }
+    res.status(200).json(result);
+  } catch (error) {
+    const formatedError = formatError(error);
+    res.status(400).json(formatedError);
+  }
+};
+
+// CURRENCY ROUTES
+
 const accountRoutes = (app: express.Application) => {
+  app.get('/api/account', index);
+  app.get('/api/account/:id', show);
   app.post('/api/account', create);
+  app.delete('/api/account/:id', destroy);
 };
 
 export default accountRoutes;

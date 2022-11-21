@@ -9,7 +9,7 @@ const request = supertest(app);
 describe('<<<<<<<<<<<<<<<<<< TESTING CURRENCY Handler >>>>>>>>>>>>>>>>>>>>>>> ', () => {
   describe('Testing CURRENCY CRUD API endpoints \n', () => {
     const currency: Currency = {
-      name: 'QWQW'
+      name: 'GBP'
     };
     const currency2: Currency = {
       name: 'TETETE'
@@ -30,7 +30,7 @@ describe('<<<<<<<<<<<<<<<<<< TESTING CURRENCY Handler >>>>>>>>>>>>>>>>>>>>>>> ',
     it('should CREATE = /api/currency (POST) create new CURRENCY ', async () => {
       const result = await request.post('/api/currency').send(currency).set('Authorization', token);
       const result2 = await request.post('/api/currency').send(currency2).set('Authorization', token);
-      expect(result.body).toEqual({ id: 1, name: 'QWQW' });
+      expect(result.body).toEqual({ id: 1, name: 'GBP' });
       expect(result2.status).toEqual(201);
     });
 
