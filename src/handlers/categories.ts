@@ -1,11 +1,11 @@
 import express, { Request, Response } from 'express';
 
-import { CategoryTypeStore } from '../models/category-type';
+import { Category, CategoryStore } from '../models/category';
 import formatError from '../utilities/formatError';
 
-const store = new CategoryTypeStore();
+const store = new CategoryStore();
 
-// INDEX = app.get('/api/category-type', index)
+// INDEX = app.get('/api/category', index)
 
 const index = async (_req: Request, res: Response) => {
   try {
@@ -20,7 +20,7 @@ const index = async (_req: Request, res: Response) => {
   }
 };
 
-// SHOW = app.get('/api/category-type/:id', show);
+// SHOW = app.get('/api/category/:id', show);
 
 const show = async (req: Request, res: Response) => {
   try {
@@ -35,11 +35,13 @@ const show = async (req: Request, res: Response) => {
   }
 };
 
-// CREATE = app.post('/api/category-type', create);
-
 const create = async (req: Request, res: Response) => {
+  const category: Category = {
+    name: req.body.name,
+    category_type_id: req.body.category_type_id
+  };
   try {
-    const result = await store.create(req.body.name);
+    const result = await store.create(category);
     res.status(201).json(result);
   } catch (err) {
     const formatedError = formatError(err);
@@ -47,13 +49,13 @@ const create = async (req: Request, res: Response) => {
   }
 };
 
-// DELETE = app.delete('/api/category-type/:id', destroy)
+// DELETE = app.delete('/api/category/:id', destroy)
 
 const destroy = async (req: Request, res: Response) => {
   try {
     const result = await store.delete(req.params.id);
     if (result == undefined) {
-      throw new Error(`No PRODUCT found with id = ${req.params.id}`);
+      throw new Error(`No CATEGORY found with id = ${req.params.id}`);
     }
     res.status(200).json(result);
   } catch (error) {
@@ -64,12 +66,12 @@ const destroy = async (req: Request, res: Response) => {
 
 // CATEGORY-TYPES ROUTES
 
-const categoryTypeRoutes = (app: express.Application) => {
+const categoryRoutes = (app: express.Application) => {
   // CRUD Routes
-  app.get('/api/category-type', index);
-  app.get('/api/category-type/:id', show);
-  app.post('/api/category-type', create);
-  app.delete('/api/category-type/:id', destroy);
+  app.get('/api/category', index);
+  app.get('/api/category/:id', show);
+  app.post('/api/category', create);
+  app.delete('/api/category/:id', destroy);
 };
 
-export default categoryTypeRoutes;
+export default categoryRoutes;

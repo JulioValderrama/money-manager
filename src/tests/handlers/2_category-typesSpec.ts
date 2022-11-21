@@ -6,12 +6,12 @@ import app from '../../server';
 
 const request = supertest(app);
 
-fdescribe('<<<<<<<<<<<<<<<<<< TESTING CATEGORY-TYPE Handler >>>>>>>>>>>>>>>>>>>>>>> ', () => {
+describe('<<<<<<<<<<<<<<<<<< TESTING CATEGORY-TYPE Handler >>>>>>>>>>>>>>>>>>>>>>> ', () => {
   describe('Testing CATEGORY-TYPE CRUD API endpoints \n', () => {
-    const product1: CategoryType = {
+    const categoryType: CategoryType = {
       name: 'Income'
     };
-    const product2: CategoryType = {
+    const categoryType2: CategoryType = {
       name: 'Expenses'
     };
     const user1: User = {
@@ -28,8 +28,11 @@ fdescribe('<<<<<<<<<<<<<<<<<< TESTING CATEGORY-TYPE Handler >>>>>>>>>>>>>>>>>>>>
     });
 
     it('should CREATE = /api/category-type (POST) create new CATEGORY-TYPE ', async () => {
-      const result = await request.post('/api/category-type').send(product1).set('Authorization', token);
-      const result2 = await request.post('/api/category-type').send(product2).set('Authorization', token);
+      const result = await request.post('/api/category-type').send(categoryType).set('Authorization', token);
+      const result2 = await request
+        .post('/api/category-type')
+        .send(categoryType2)
+        .set('Authorization', token);
       expect(result.status).toEqual(201);
       expect(result2.status).toEqual(201);
     });

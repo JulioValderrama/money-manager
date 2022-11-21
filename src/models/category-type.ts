@@ -36,11 +36,11 @@ export class CategoryTypeStore {
 
   // CREATE()
 
-  async create(category_type: string): Promise<CategoryType> {
+  async create(category_type: CategoryType): Promise<CategoryType> {
     try {
       const connection = await client.connect();
       const sql = 'INSERT INTO category_type (name) VALUES($1) RETURNING *;';
-      const result = await connection.query(sql, [category_type]);
+      const result = await connection.query(sql, [category_type.name]);
       connection.release();
       return result.rows[0];
     } catch (err) {
