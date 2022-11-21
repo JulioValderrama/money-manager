@@ -50,4 +50,29 @@ export class AccountsStore {
       console.log(err);
     }
   }
+
+  async getCurrencyId(accountsId: number) {
+    try {
+      const connection = await client.connect();
+      const sql = 'SELECT currency_id FROM accounts WHERE accounts.id = ($1);';
+      const result = await connection.query(sql, [accountsId]);
+      connection.release();
+      return result.rows[0];
+    } catch (err) {
+      throw new Error(`Could not get the Currency_id from Accounts. Error: ${err}`);
+    }
+  }
+
+  async getCurrencySymbol(accountsId: number) {
+    try {
+      const connection = await client.connect();
+      const sql =
+        'SELECT currency.name FROM accounts INNER JOIN currency ON accounts.currency_id = currency.id WHERE accounts.id = ($1);';
+      const result = await connection.query(sql, [accountsId]);
+      connection.release();
+      return result.rows[0];
+    } catch (err) {
+      throw new Error(`Could not get the Currency_id from Accounts. Error: ${err}`);
+    }
+  }
 }

@@ -4,7 +4,7 @@ export type Account = {
   id?: number;
   date: string;
   amount_account_currency: number;
-  amount_default_currency: number;
+  amount_default_currency?: number;
   comment: string;
   accounts_id: number;
   category_id: number;
