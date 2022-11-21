@@ -32,31 +32,3 @@ app.listen(port, function () {
 });
 
 console.log('Working');
-
-// // -----------------------------------------
-
-// import convertCurrency from './services/apis/convert-currency';
-// import currencySymbols from './services/apis/currency-symbols';
-import { CurrencyStore } from './models/currency';
-import createAllSymbols from './services/currencyServices';
-
-// const prueba = async () => {
-//   const result = await convertCurrency('EUR', 'GBP', 40);
-//   console.log(result);
-// };
-
-// prueba();
-
-// const symbols = async () => {
-//   const result = await currencySymbols();
-//   console.log(result);
-// };
-
-// symbols();
-
-// const store = new CurrencyStore();
-// store.createAll();
-
-//createAllSymbols();
-
-// // -----------------------------------------
