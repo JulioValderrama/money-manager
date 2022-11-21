@@ -2,7 +2,7 @@ import express, { Request, Response } from 'express';
 
 import { Account, AccountStore } from '../models/account';
 import formatError from '../utilities/formatError';
-import getDefaultCurrency from '../utilities/getSymbolToConvert';
+import getDefaultCurrency from '../utilities/getDefaultCurrency';
 import { AccountsStore } from '../models/accounts';
 
 const store = new AccountStore();
