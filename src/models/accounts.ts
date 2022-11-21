@@ -14,6 +14,34 @@ export type Accounts = {
 };
 
 export class AccountsStore {
+  // INDEX()
+
+  async index(): Promise<Accounts[]> {
+    try {
+      const connection = await client.connect();
+      const sql = 'SELECT * FROM accounts;';
+      const result = await connection.query(sql);
+      connection.release();
+      return result.rows;
+    } catch (error) {
+      throw new Error(`Could not get ACCOUNTS. Error: ${error}`);
+    }
+  }
+
+  // SHOW()
+
+  async show(id: string): Promise<Accounts> {
+    try {
+      const connection = await client.connect();
+      const sql = 'SELECT * FROM accounts WHERE id=($1)';
+      const result = await connection.query(sql, [id]);
+      connection.release();
+      return result.rows[0];
+    } catch (error) {
+      throw new Error(`Could not get the ACCOUNTS. Error: ${error}`);
+    }
+  }
+
   // CREATE()
 
   async create(accounts: Accounts): Promise<Accounts> {
@@ -36,6 +64,25 @@ export class AccountsStore {
     }
   }
 
+  // DELETE()
+
+  async delete(id: string): Promise<Accounts> {
+    try {
+      const connection = await client.connect();
+      const sql = 'DELETE FROM accounts WHERE id=($1) RETURNING *;';
+      const result = await connection.query(sql, [id]);
+      connection.release();
+      return result.rows[0];
+    } catch (error) {
+      console.log(error);
+      throw new Error(`Could not DELETE ACCOUNTS. Error: ${error}`);
+    }
+  }
+
+  // Other METHODS
+
+  // UpdateTotal()
+
   async updateTotal(accountsId: number, categoryId: number): Promise<Accounts | undefined> {
     try {
       const connection = await client.connect();
@@ -51,6 +98,8 @@ export class AccountsStore {
     }
   }
 
+  // getCurrencyId()
+
   async getCurrencyId(accountsId: number) {
     try {
       const connection = await client.connect();
@@ -62,6 +111,8 @@ export class AccountsStore {
       throw new Error(`Could not get the Currency_id from Accounts. Error: ${err}`);
     }
   }
+
+  // getCurrencySymbol()
 
   async getCurrencySymbol(accountsId: number) {
     try {

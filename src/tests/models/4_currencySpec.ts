@@ -39,13 +39,13 @@ describe('------------------------------TESTING Currency Model------------------
       const result = await store.show('1');
       expect(result.name).toEqual('QWQW');
     });
-    it('should DELETE() method delete CURRENCY with id provided', async () => {
-      const result = await store.delete('1');
-      expect(result.name).toEqual('QWQW');
-    });
     it('Should CREATEALL() fetch data from API and create symbols in Database', async () => {
       const result = await store.createAll();
       expect(result.length).toBeGreaterThan(100);
+    });
+    it('should DELETE() method delete CURRENCY with id provided', async () => {
+      const result = await store.delete('10');
+      expect(result.name).toEqual('AOA');
     });
   });
 });
