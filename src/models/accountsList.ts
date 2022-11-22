@@ -91,10 +91,9 @@ export class AccountsListStore {
       const sumTotal = await accountsListServices.getSumPerAccountAndCategory(accountsId, categoryId);
       const result = await connection.query(sql, [sumTotal['account'], sumTotal['default'], categoryId]);
       connection.release();
-      console.log(result.rows[0]);
       return result.rows[0];
     } catch (err) {
-      console.log(err);
+      throw new Error(`Could not update the Total amount in Accounts. Error ${err}`);
     }
   }
 

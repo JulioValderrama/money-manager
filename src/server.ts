@@ -7,6 +7,7 @@ import categoryRoutes from './controllers/categories';
 import currencyRoutes from './controllers/currencies';
 import accountsRoutes from './controllers/accountsList';
 import accountRoutes from './controllers/account';
+import appQueriesRoutes from './services/appQueriesController';
 
 const app: express.Application = express();
 
@@ -26,6 +27,7 @@ categoryRoutes(app);
 currencyRoutes(app);
 accountsRoutes(app);
 accountRoutes(app);
+appQueriesRoutes(app);
 
 app.listen(port, function () {
   console.log(`starting app on: http://localhost:${port}`);
