@@ -17,12 +17,14 @@ export class AppQueries {
     }
   }
 
-  async getBalancePerAccount(accountName: string) {
+  // Get the total Balance per account when name provided
+
+  async getBalancePerAccount(accountName: string, category_type_name: string) {
     try {
       const connection = await client.connect();
       const sql =
-        'SELECT category.name, SUM(account.amount_default_currency) FROM account INNER JOIN accounts ON account.accounts_id = accounts.id INNER JOIN category ON account.category_id = category.id INNER JOIN category_type ON category.category_type_id = category_type.id WHERE accounts.name = ($1) GROUP BY category.name;';
-      const result = await connection.query(sql, [accountName]);
+        'SELECT category.name, SUM(account.amount_default_currency) FROM account INNER JOIN accounts ON account.accounts_id = accounts.id INNER JOIN category ON account.category_id = category.id INNER JOIN category_type ON category.category_type_id = category_type.id WHERE accounts.name = ($1) AND category_type.name = ($2) GROUP BY category.name;';
+      const result = await connection.query(sql, [accountName, category_type_name]);
       connection.release();
       return result.rows;
     } catch (err) {
