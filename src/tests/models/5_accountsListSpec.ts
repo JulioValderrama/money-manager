@@ -1,6 +1,6 @@
-import { Accounts, AccountsStore } from '../../models/accounts';
+import { AccountsList, AccountsListStore } from '../../models/accountsList';
 
-const store = new AccountsStore();
+const store = new AccountsListStore();
 
 describe('------------------------------TESTING Account Model------------------------------', () => {
   describe('Testing ACCOUNTS methods exits \n', () => {
@@ -19,7 +19,7 @@ describe('------------------------------TESTING Account Model-------------------
   });
 
   describe('Testing ACCOUNTS Model CRUD API with Database \n', () => {
-    const accounts: Accounts = {
+    const accounts: AccountsList = {
       name: 'savings',
       amount_account_currency: 10,
       amount_default_currency: 15,
@@ -27,7 +27,7 @@ describe('------------------------------TESTING Account Model-------------------
       currency_id: 1,
       user_id: 3
     };
-    const accounts1: Accounts = {
+    const accounts1: AccountsList = {
       name: 'England',
       amount_account_currency: 110,
       amount_default_currency: 115,
@@ -35,7 +35,7 @@ describe('------------------------------TESTING Account Model-------------------
       currency_id: 1,
       user_id: 3
     };
-    const accounts2: Accounts = {
+    const accounts2: AccountsList = {
       name: 'Testing Account',
       amount_account_currency: 110,
       amount_default_currency: 115,

@@ -1,9 +1,9 @@
 import express, { Request, Response } from 'express';
 
-import { Accounts, AccountsStore } from '../models/accounts';
+import { AccountsList, AccountsListStore } from '../models/accountsList';
 import formatError from '../utilities/formatError';
 
-const store = new AccountsStore();
+const store = new AccountsListStore();
 
 // INDEX = app.get('/api/accounts', index)
 
@@ -36,7 +36,7 @@ const show = async (req: Request, res: Response) => {
 };
 
 const create = async (req: Request, res: Response) => {
-  const accounts: Accounts = {
+  const accounts: AccountsList = {
     name: req.body.name,
     amount_account_currency: req.body.amount_account_currency,
     amount_default_currency: req.body.amount_default_currency,

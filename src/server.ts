@@ -5,7 +5,7 @@ import usersRoutes from './controllers/users';
 import categoryTypeRoutes from './controllers/category_types';
 import categoryRoutes from './controllers/categories';
 import currencyRoutes from './controllers/currencies';
-import accountsRoutes from './controllers/accounts';
+import accountsRoutes from './controllers/accountsList';
 import accountRoutes from './controllers/account';
 
 const app: express.Application = express();

@@ -1,14 +1,14 @@
 import supertest from 'supertest';
 
-import { Accounts } from '../../models/accounts';
+import { AccountsList } from '../../models/accountsList';
 import { User } from '../../models/user';
 import app from '../../server';
 
 const request = supertest(app);
 
-describe('<<<<<<<<<<<<<<<<<< TESTING ACCOUNTS Handler >>>>>>>>>>>>>>>>>>>>>>> ', () => {
-  describe('Testing ACCOUNTS CRUD API endpoints \n', () => {
-    const accounts: Accounts = {
+describe('<<<<<<<<<<<<<<<<<< TESTING ACCOUNTS LIST Handler >>>>>>>>>>>>>>>>>>>>>>> ', () => {
+  describe('Testing ACCOUNTS LIST  CRUD API endpoints \n', () => {
+    const accounts: AccountsList = {
       name: 'test',
       amount_account_currency: 10,
       amount_default_currency: 15,
@@ -16,7 +16,7 @@ describe('<<<<<<<<<<<<<<<<<< TESTING ACCOUNTS Handler >>>>>>>>>>>>>>>>>>>>>>> ',
       currency_id: 1,
       user_id: 3
     };
-    const accounts1: Accounts = {
+    const accounts1: AccountsList = {
       name: 'test1',
       amount_account_currency: 110,
       amount_default_currency: 115,

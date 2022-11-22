@@ -1,9 +1,9 @@
 import client from '../database/database';
 import { CurrencyStore } from '../models/currency';
-import { AccountsStore } from '../models/accounts';
+import { AccountsListStore } from '../models/accountsList';
 import convertCurrency from '../services/apis/convert-currency';
 
-const accountsStore = new AccountsStore();
+const accountsStore = new AccountsListStore();
 
 export class CurrencyServices {
   // Function to RUN in the code the createAll() methond in Currency Model

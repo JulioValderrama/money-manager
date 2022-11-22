@@ -1,6 +1,6 @@
 import client from '../database/database';
 
-export class AccountsServices {
+export class AccountsListServices {
   async getSumPerAccountAndCategory(category_id: number, accounts_id: number) {
     try {
       const connection = await client.connect();
@@ -14,4 +14,4 @@ export class AccountsServices {
   }
 }
 
-export default AccountsServices;
+export default AccountsListServices;

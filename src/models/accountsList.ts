@@ -1,9 +1,9 @@
 import client from '../database/database';
-import AccountsServices from '../services/accountsServices';
+import AccountsListServices from '../services/accountsServices';
 
-const accountsServices = new AccountsServices();
+const accountsListServices = new AccountsListServices();
 
-export type Accounts = {
+export type AccountsList = {
   id?: number;
   name: string;
   amount_account_currency: number;
@@ -13,10 +13,10 @@ export type Accounts = {
   user_id: number;
 };
 
-export class AccountsStore {
+export class AccountsListStore {
   // INDEX()
 
-  async index(): Promise<Accounts[]> {
+  async index(): Promise<AccountsList[]> {
     try {
       const connection = await client.connect();
       const sql = 'SELECT * FROM accounts;';
@@ -30,7 +30,7 @@ export class AccountsStore {
 
   // SHOW()
 
-  async show(id: string): Promise<Accounts> {
+  async show(id: string): Promise<AccountsList> {
     try {
       const connection = await client.connect();
       const sql = 'SELECT * FROM accounts WHERE id=($1)';
@@ -44,7 +44,7 @@ export class AccountsStore {
 
   // CREATE()
 
-  async create(accounts: Accounts): Promise<Accounts> {
+  async create(accounts: AccountsList): Promise<AccountsList> {
     try {
       const connection = await client.connect();
       const sql =
@@ -66,7 +66,7 @@ export class AccountsStore {
 
   // DELETE()
 
-  async delete(id: string): Promise<Accounts> {
+  async delete(id: string): Promise<AccountsList> {
     try {
       const connection = await client.connect();
       const sql = 'DELETE FROM accounts WHERE id=($1) RETURNING *;';
@@ -83,12 +83,12 @@ export class AccountsStore {
 
   // UpdateTotal()
 
-  async updateTotal(accountsId: number, categoryId: number): Promise<Accounts | undefined> {
+  async updateTotal(accountsId: number, categoryId: number): Promise<AccountsList | undefined> {
     try {
       const connection = await client.connect();
       const sql =
         'UPDATE accounts SET amount_account_currency = ($1), amount_default_currency = ($2) WHERE accounts.id = ($3) RETURNING *;';
-      const sumTotal = await accountsServices.getSumPerAccountAndCategory(accountsId, categoryId);
+      const sumTotal = await accountsListServices.getSumPerAccountAndCategory(accountsId, categoryId);
       const result = await connection.query(sql, [sumTotal['account'], sumTotal['default'], categoryId]);
       connection.release();
       console.log(result.rows[0]);

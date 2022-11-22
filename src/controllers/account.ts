@@ -1,12 +1,12 @@
 import express, { Request, Response } from 'express';
 
 import { Account, AccountStore } from '../models/account';
-import { AccountsStore } from '../models/accounts';
+import { AccountsListStore } from '../models/accountsList';
 import CurrencyServices from '../services/currencyServices';
 import formatError from '../utilities/formatError';
 
 const store = new AccountStore();
-const accountsStore = new AccountsStore();
+const accountsStore = new AccountsListStore();
 const currencyServices = new CurrencyServices();
 
 // INDEX = app.get('/api/account', index)
