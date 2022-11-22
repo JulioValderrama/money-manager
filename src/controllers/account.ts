@@ -1,12 +1,13 @@
 import express, { Request, Response } from 'express';
 
 import { Account, AccountStore } from '../models/account';
-import formatError from '../utilities/formatError';
-import getDefaultCurrency from '../utilities/getDefaultCurrency';
 import { AccountsStore } from '../models/accounts';
+import CurrencyServices from '../services/currencyServices';
+import formatError from '../utilities/formatError';
 
 const store = new AccountStore();
 const accountsStore = new AccountsStore();
+const currencyServices = new CurrencyServices();
 
 // INDEX = app.get('/api/account', index)
 
@@ -47,7 +48,7 @@ const create = async (req: Request, res: Response) => {
     category_id: req.body.category_id
   };
   try {
-    account.amount_default_currency = await getDefaultCurrency(
+    account.amount_default_currency = await currencyServices.getDefaultCurrency(
       account.accounts_id,
       'EUR',
       account.amount_account_currency

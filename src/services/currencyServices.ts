@@ -1,5 +1,9 @@
-import { CurrencyStore } from '../models/currency';
 import client from '../database/database';
+import { CurrencyStore } from '../models/currency';
+import { AccountsStore } from '../models/accounts';
+import convertCurrency from '../services/apis/convert-currency';
+
+const accountsStore = new AccountsStore();
 
 export class CurrencyServices {
   async createAllSymbols() {
@@ -11,6 +15,7 @@ export class CurrencyServices {
       throw new Error(`Could not fetch Symbols from external API. Error: ${err}`);
     }
   }
+
   async getCurrencySymbolFromAccount(currencyId: number, accountsId: number) {
     try {
       const connection = await client.connect();
@@ -23,6 +28,20 @@ export class CurrencyServices {
       throw new Error(`Could not get the Symbol for the currency. Error: ${err}`);
     }
   }
+
+  getDefaultCurrency = async (
+    accountId: number,
+    currencyDefaultSymbol: string,
+    amount: number
+  ): Promise<number> => {
+    const currencyAccountSymbol = await accountsStore.getCurrencySymbol(accountId);
+    const currencyDefaultConverted = await convertCurrency(
+      currencyAccountSymbol.name,
+      currencyDefaultSymbol,
+      amount
+    );
+    return parseInt(currencyDefaultConverted as unknown as string);
+  };
 }
 
 export default CurrencyServices;
