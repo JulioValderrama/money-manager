@@ -46,6 +46,7 @@ describe('<<<<<<<<<<<<<<<<<< TESTING ACCOUNTS Handler >>>>>>>>>>>>>>>>>>>>>>> ',
 
     it('should INDEX = /api/accounts (GET) get a list of all ACCOUNTS ', async () => {
       const result = await request.get('/api/accounts');
+      console.log(result.body);
       expect(result.status).toEqual(200);
     });
 

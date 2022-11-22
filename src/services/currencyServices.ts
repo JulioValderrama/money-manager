@@ -6,23 +6,27 @@ import convertCurrency from '../services/apis/convert-currency';
 const accountsStore = new AccountsStore();
 
 export class CurrencyServices {
+  // Function to RUN in the code the createAll() methond in Currency Model
+
   async createAllSymbols() {
     try {
       const store = new CurrencyStore();
       const result = await store.createAll();
       console.log(`${result.length} Symbols from external API copied to Database currency table`);
+      return result;
     } catch (err) {
       throw new Error(`Could not fetch Symbols from external API. Error: ${err}`);
     }
   }
 
-  async getCurrencySymbolFromAccount(currencyId: number, accountsId: number) {
+  async getCurrencySymbolFromAccount(accountsId: number): Promise<string[]> {
     try {
       const connection = await client.connect();
       const sql =
-        'SELECT currency.name as symbol, accounts.name FROM currency INNER JOIN accounts ON currency.id = accounts.currency_id WHERE currency.id = ($1) AND accounts.id = ($2);';
-      const result = await connection.query(sql, [currencyId, accountsId]);
+        'SELECT currency.name FROM currency INNER JOIN accounts ON currency.id = accounts.currency_id WHERE accounts.id = ($1);';
+      const result = await connection.query(sql, [accountsId]);
       connection.release();
+      console.log(result.rows[0]);
       return result.rows[0];
     } catch (err) {
       throw new Error(`Could not get the Symbol for the currency. Error: ${err}`);

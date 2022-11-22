@@ -1,5 +1,5 @@
 import client from '../database/database';
-import currencySymbols from '../services/apis/currency-symbols';
+import getSymbolsAPI from '../services/apis/currency-symbols';
 
 export type Currency = {
   id?: number;
@@ -49,22 +49,6 @@ export class CurrencyStore {
     }
   }
 
-  async createAll(): Promise<string[]> {
-    try {
-      const connection = await client.connect();
-      const symbols = await currencySymbols();
-      const symbolsList = [];
-      for (let i = 0; i < symbols.length; i++) {
-        connection.query(`INSERT INTO currency (name) VALUES ('${symbols[i]}')`);
-        symbolsList.push(symbols[i]);
-      }
-      connection.release();
-      return symbolsList;
-    } catch (err) {
-      throw new Error(`Could not create all the symbols from external API. Error: ${err}`);
-    }
-  }
-
   // DELETE()
 
   async delete(id: string): Promise<Currency> {
@@ -77,6 +61,22 @@ export class CurrencyStore {
     } catch (error) {
       console.log(error);
       throw new Error(`Could not DELETE Currency. Error: ${error}`);
+    }
+  }
+
+  async createAll(): Promise<string[]> {
+    try {
+      const connection = await client.connect();
+      const symbols = await getSymbolsAPI();
+      const symbolsList = [];
+      for (let i = 0; i < symbols.length; i++) {
+        connection.query(`INSERT INTO currency (name) VALUES ('${symbols[i]}')`);
+        symbolsList.push(symbols[i]);
+      }
+      connection.release();
+      return symbolsList;
+    } catch (err) {
+      throw new Error(`Could not create all the symbols from external API. Error: ${err}`);
     }
   }
 }
