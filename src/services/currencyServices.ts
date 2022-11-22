@@ -26,7 +26,6 @@ export class CurrencyServices {
         'SELECT currency.name FROM currency INNER JOIN accounts ON currency.id = accounts.currency_id WHERE accounts.id = ($1);';
       const result = await connection.query(sql, [accountsId]);
       connection.release();
-      console.log(result.rows[0]);
       return result.rows[0];
     } catch (err) {
       throw new Error(`Could not get the Symbol for the currency. Error: ${err}`);
